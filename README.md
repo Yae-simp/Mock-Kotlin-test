@@ -1,3 +1,3 @@
 # Mock-Kotlin-test
 I'm so cooked, man. 
-Notes app using DummyJSON.
+30 recipes app using DummyJSON.
