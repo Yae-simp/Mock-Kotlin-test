@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
@@ -23,14 +22,11 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var adapter: RecipeAdapter
-
     private var recipeList: List<Recipe> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -48,9 +44,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
-
         searchRecipe("a")
     }
+
     private fun navigateToDetail(recipe: Recipe) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(DetailActivity.EXTRA_RECIPE_ID, recipe.id)

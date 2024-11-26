@@ -37,7 +37,6 @@ class ViewHolder(private val binding: ItemRecipeBinding) : RecyclerView.ViewHold
 
     fun render(recipe: Recipe) {
         binding.recipeNameTextView.text = recipe.name
-
         Picasso.get().load(recipe.image).into(binding.recipeImageView)
     }
 }

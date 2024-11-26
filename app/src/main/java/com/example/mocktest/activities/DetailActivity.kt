@@ -1,6 +1,7 @@
 package com.example.mocktest.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -12,9 +13,11 @@ import com.example.mocktest.R
 import com.example.mocktest.data.Recipe
 import com.example.mocktest.databinding.ActivityDetailBinding
 import com.example.mocktest.retrofit.RetrofitProvider
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.example.mocktest.sessionmanager.SessionManager
 
 class DetailActivity : AppCompatActivity() {
 
@@ -25,6 +28,15 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private lateinit var recipe: Recipe
+    //Whether horoscope is favorite or not
+    private var isFav = false
+
+    //Fav menu option for changing the fav icon
+    private lateinit var favMenuItem: MenuItem
+
+    //Session manager, saves fav horoscope
+    private lateinit var session: SessionManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +44,12 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        //Instantiates session object
+        session = com.example.mocktest.sessionmanager.SessionManager(this)
+
+        //Revises whether horoscope is fav or not
+        isFav = session.isFavorite(recipe.id.toString())
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -41,6 +59,7 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.navigationBar.itemIconTintList = null
         binding.navigationBar.setOnItemSelectedListener {
             setSelectedTab(it.itemId)
         }
@@ -58,8 +77,41 @@ class DetailActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+            R.id.fav_menu -> {
+                println("Pressed 'favorite' button.")
+                if (isFav) {
+                    session.setFavorite("")
+                } else {
+                    session.setFavorite(recipe.id.toString())
+                }
+                isFav = !isFav
+                setFavoriteIcon()
+                return true
+            }
+            R.id.share_menu -> {
+                println("Pressed 'share' button.")
+                shareDaily()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+    private fun shareDaily() {
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "urmom is gae")
+        sendIntent.type = "text/plain"
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
+    private fun setFavoriteIcon() {
+        if(isFav) {
+            favMenuItem.setIcon(R.drawable.ic_selected_fav)
+        } else {
+            favMenuItem.setIcon(R.drawable.ic_fav)
+        }
     }
 
     private fun setSelectedTab(itemId: Int) : Boolean {
@@ -87,6 +139,7 @@ class DetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun loadData() {
         supportActionBar?.title = recipe.name
+        Picasso.get().load(recipe.image).into(binding.recipeImageView)
 
         //Ingredients
         binding.ingredientsContent.ingredientsTextView.text = recipe.ingredients.joinToString("\n")
@@ -94,19 +147,12 @@ class DetailActivity : AppCompatActivity() {
         //Instructions
         binding.instructionsContent.instructionsTextView.text = recipe.instructions.joinToString("\n")
 
-        if (recipe?.misc != null) {
-            binding.miscContent.contentTextView.text = recipe.misc.prepTimeMinutes.toString()
-        } else {
-            // Handle the case where recipe or recipe.misc is null
-            Log.e("NullPointer", "Recipe or recipe.misc is null!")
-        }
-        //Misc
-        binding.miscContent.prepTimeMinutesTextView.text = recipe.misc.prepTimeMinutes.toString()
-        binding.miscContent.cookTimeMinutesTextView.text = recipe.misc.cookTimeMinutes.toString()
-        binding.miscContent.servingsTV.text = recipe.misc.servings.toString()
-        binding.miscContent.difficultyTV.text = recipe.misc.difficulty
-        binding.miscContent.cuisineTV.text = recipe.misc.cuisine
-        binding.miscContent.caloriesPerServingTV.text = recipe.misc.caloriesPerServing.toString()
+        binding.miscContent.prepTimeMinutesTextView.text = recipe.prepTimeMinutes.toString()
+        binding.miscContent.cookTimeMinutesTextView.text = recipe.cookTimeMinutes.toString()
+        binding.miscContent.servingsTV.text = recipe.servings.toString()
+        binding.miscContent.difficultyTV.text = recipe.difficulty
+        binding.miscContent.cuisineTV.text = recipe.cuisine
+        binding.miscContent.caloriesPerServingTV.text = recipe.caloriesPerServing.toString()
     }
 
     private fun getRecipe(id: Int) {

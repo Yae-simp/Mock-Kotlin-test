@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="45"
-            android:textStyle="bold"/>
+            android:textStyle="normal"/>
 
     </LinearLayout>
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="45"
-            android:textStyle="bold"/>
+            android:textStyle="normal"/>
 
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="4"
-            android:textStyle="bold"/>
+            android:textStyle="normal"/>
 
     </LinearLayout>
 
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="Easy"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textAllCaps="true"/>
 
     </LinearLayout>
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="246"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textAllCaps="true"/>
 
     </LinearLayout>
@@ -147,31 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="Italian"
-            android:textStyle="bold"
-            android:textAllCaps="true"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/tags"
-            android:textAlignment="textEnd"
-            android:layout_marginEnd="8dp"/>
-
-        <TextView
-            android:id="@+id/tagsTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            tools:text="Italian"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textAllCaps="true"/>
 
     </LinearLayout>

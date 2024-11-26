@@ -31,7 +31,19 @@
             android:gravity="center"
             android:textStyle="bold"
             android:layout_gravity="bottom"
-            android:textColor="@color/black" />
+            android:background="@color/text_background"
+            android:textColor="@color/white"
+            android:shadowRadius="5"
+            android:shadowColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/favoriteImageView"
+            android:layout_width="33dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_selected_fav"
+            app:tint="#E91E63"
+            tools:ignore="ContentDescription" />
 
     </androidx.cardview.widget.CardView>
 
