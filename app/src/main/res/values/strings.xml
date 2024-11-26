@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Mock test</string>
+    <string name="no_results_for">No results for .</string>
+    <string name="search">Search</string>
+    <string name="menu_ingredients">Hi</string>
+    <string name="menu_instructions">Hi</string>
+    <string name="menu_misc">Hi</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="prepTimeMinutes">Preparation time:</string>
+    <string name="cookTime">Cooking time:</string>
+    <string name="servings">Servings:</string>
+    <string name="difficulty">Difficulty:</string>
+    <string name="caloriesPerServing">Calories per serving:</string>
+    <string name="tags">Tags:</string>
+    <string name="error">Error</string>
+    <string name="your_recipe">Your recipe</string>
+    <string name="add_new_recipe">Add new recipe</string>
+    <string name="save">Save</string>
+    <string name="name_of_recipe">Name of recipe</string>
+    <string name="new_recipe_ingredients">Ingredients</string>
+</resources>

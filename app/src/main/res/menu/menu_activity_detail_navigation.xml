@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_ingredients"
+        android:icon="@drawable/ingredients"
+        app:showAsAction="always"
+        android:title="@string/menu_ingredients"/>
+    <item
+        android:id="@+id/menu_instructions"
+        android:icon="@drawable/instructions"
+        app:showAsAction="always"
+        android:title="@string/menu_instructions"/>
+    <item
+        android:id="@+id/menu_misc"
+        android:icon="@drawable/miscellaneous"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_misc"/>
+</menu>
