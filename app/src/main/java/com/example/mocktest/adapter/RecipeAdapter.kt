@@ -35,7 +35,7 @@ class RecipeAdapter (private var items: List<Recipe>, val onItemClick: (Int) -> 
     }
 }
 
-class RecipeViewHolder(internal val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+class RecipeViewHolder(private val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun render(recipe: Recipe) {
         binding.recipeNameTextView.text = recipe.name

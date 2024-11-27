@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import com.example.mocktest.data.NewRecipe
 
 class RecipeDAO(private val context: Context) {
 
@@ -77,7 +78,8 @@ class RecipeDAO(private val context: Context) {
 
     fun findById (id: Long) : NewRecipe? {
         open()
-        val projection = arrayOf(NewRecipe.COLUMN_ID,
+        val projection = arrayOf(
+            NewRecipe.COLUMN_ID,
                                 NewRecipe.COLUMN_NAME_TITLE,
                                 NewRecipe.COLUMN_INGREDIENTS,
                                 NewRecipe.COLUMN_INSTRUCTIONS)

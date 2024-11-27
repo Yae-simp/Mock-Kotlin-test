@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MockTest"
         tools:targetApi="31">
         <activity
+            android:name=".activities.CreateRecipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DetailActivity"
             android:exported="false" />
         <activity

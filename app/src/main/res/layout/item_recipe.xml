@@ -38,11 +38,9 @@
 
         <ImageView
             android:id="@+id/favoriteImageView"
-            android:layout_width="33dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_selected_fav"
-            app:tint="#E91E63"
             tools:ignore="ContentDescription" />
 
     </androidx.cardview.widget.CardView>

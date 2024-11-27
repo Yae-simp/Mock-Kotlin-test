@@ -1,4 +1,4 @@
-package com.example.mocktest.sqlite
+package com.example.mocktest.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.mocktest.databinding.ActivityNewRecipeBinding
+import com.example.mocktest.data.NewRecipe
+import com.example.mocktest.sqlite.RecipeDAO
 
 
 class CreateRecipeActivity : AppCompatActivity() {

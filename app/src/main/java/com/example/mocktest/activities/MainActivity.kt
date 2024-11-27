@@ -15,7 +15,6 @@ import com.example.mocktest.adapter.RecipeAdapter
 import com.example.mocktest.data.Recipe
 import com.example.mocktest.databinding.ActivityMainBinding
 import com.example.mocktest.retrofit.RetrofitProvider
-import com.example.mocktest.sessionmanager.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         searchRecipe()
+        binding.addRecipeButton.setOnClickListener {
+            val intent = Intent(this, CreateRecipeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

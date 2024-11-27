@@ -1,9 +1,11 @@
-package com.example.mocktest.sqlite
+package com.example.mocktest.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mocktest.databinding.ItemNewRecipeBinding
+import com.example.mocktest.data.NewRecipe
 
 class NewRecipeAdapter (
     private var items: List<NewRecipe>,
@@ -31,6 +33,7 @@ class NewRecipeAdapter (
         return items.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(items: List<NewRecipe>) {
         this.items = items
         notifyDataSetChanged()

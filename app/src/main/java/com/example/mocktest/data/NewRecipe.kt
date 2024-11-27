@@ -1,4 +1,4 @@
-package com.example.mocktest.sqlite
+package com.example.mocktest.data
 
 data class NewRecipe(
     val id: Long = -1,
