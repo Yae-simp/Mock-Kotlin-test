@@ -15,6 +15,7 @@ import com.example.mocktest.adapter.RecipeAdapter
 import com.example.mocktest.data.Recipe
 import com.example.mocktest.databinding.ActivityMainBinding
 import com.example.mocktest.retrofit.RetrofitProvider
+import com.example.mocktest.sessionmanager.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,6 +48,11 @@ class MainActivity : AppCompatActivity() {
         searchRecipe()
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.updateItems(recipeList)
+    }
+
     private fun navigateToDetail(recipe: Recipe) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(DetailActivity.EXTRA_RECIPE_ID, recipe.id)
@@ -61,12 +67,13 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                searchRecipe()
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                return false
+                val filteredList = recipeList.filter { it.name.contains(newText, true) }
+                adapter.updateItems(filteredList)
+                return true
             }
         })
 

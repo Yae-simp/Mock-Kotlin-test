@@ -69,9 +69,9 @@ class DetailActivity : AppCompatActivity() {
             }
             R.id.fav_menu -> {
                 if (isFav) {
-                    session.setFavorite("")
+                    session.setFavorite(-1)
                 } else {
-                    session.setFavorite(recipe.id.toString())
+                    session.setFavorite(recipe.id)
                 }
                 isFav = !isFav
                 setFavoriteIcon()
@@ -160,12 +160,12 @@ class DetailActivity : AppCompatActivity() {
                 recipe = service.getRecipeById(id)
 
                 CoroutineScope(Dispatchers.Main).launch {
-                    isFav = session.isFavorite(recipe.id.toString())
+                    isFav = session.isFavorite(recipe.id)
                     loadData()
                     setFavoriteIcon()
                     Log.d("DetailActivity", "Fetching recipe with ID: $id")
                     Log.d("DetailActivity", "Recipe is favorite: $isFav")
-                    Log.d("SessionManager", "Is favorite for recipe ${recipe.id}: ${session.isFavorite(recipe.id.toString())}")
+                    Log.d("SessionManager", "Is favorite for recipe ${recipe.id}: ${session.isFavorite(recipe.id)}")
                 }
             } catch (e: Exception) {
                 Log.e("API", e.stackTraceToString())

@@ -3,16 +3,15 @@ package com.example.mocktest.sqlite
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mocktest.adapter.ViewHolder
 import com.example.mocktest.databinding.ItemNewRecipeBinding
 
 class NewRecipeAdapter (
     private var items: List<NewRecipe>,
     val onItemClick: (Int) -> Unit,
     val onItemDelete: (Int) -> Unit
-) : RecyclerView.Adapter<ViewHolder>() {
+) : RecyclerView.Adapter<NewRecipeViewHolder>() {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewRecipeViewHolder, position: Int) {
         val recipe = items[position]
         holder.render(recipe)
         holder.itemView.setOnClickListener {
@@ -23,9 +22,9 @@ class NewRecipeAdapter (
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.example.mocktest.sqlite.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewRecipeViewHolder {
         val binding = ItemNewRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return NewRecipeViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -38,7 +37,7 @@ class NewRecipeAdapter (
     }
 }
 
-class ViewHolder (private val binding: ItemNewRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+class NewRecipeViewHolder (val binding: ItemNewRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun render(recipe: NewRecipe) {
         binding.newRecipeNameTV.text = recipe.title

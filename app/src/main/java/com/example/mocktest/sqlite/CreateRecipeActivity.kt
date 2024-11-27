@@ -39,7 +39,7 @@ class CreateRecipeActivity : AppCompatActivity() {
             recipeDAO.findById(id)!!
         } else {
             isEditing = false
-            NewRecipe(-1, "")
+            NewRecipe(-1, "", "", "")
         }
 
         loadViews()
