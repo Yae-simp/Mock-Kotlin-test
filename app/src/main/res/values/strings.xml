@@ -19,6 +19,7 @@
     <string name="save">Save</string>
     <string name="name_of_recipe">Name of recipe</string>
     <string name="new_recipe_ingredients">Ingredients</string>
+    <string name="new_recipe_instructions">Instructions</string>
     <string name="new_recipe_name">Your recipe name</string>
     <string name="menu_fav">menu favorite</string>
     <string name="menu_share">menu share</string>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -26,15 +27,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailBinding
-
     private lateinit var recipe: Recipe
-    //Whether horoscope is favorite or not
     private var isFav = false
-
-    //Fav menu option for changing the fav icon
     private lateinit var favMenuItem: MenuItem
-
-    //Session manager, saves fav horoscope
     private lateinit var session: SessionManager
 
 
@@ -45,11 +40,7 @@ class DetailActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        //Instantiates session object
-        session = com.example.mocktest.sessionmanager.SessionManager(this)
-
-        //Revises whether horoscope is fav or not
-        isFav = session.isFavorite(recipe.id.toString())
+        session = SessionManager(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -67,7 +58,6 @@ class DetailActivity : AppCompatActivity() {
         binding.navigationBar.selectedItemId = R.id.menu_ingredients
 
         val id = intent.getIntExtra(EXTRA_RECIPE_ID, -1)
-
         getRecipe(id)
     }
 
@@ -78,7 +68,6 @@ class DetailActivity : AppCompatActivity() {
                 return true
             }
             R.id.fav_menu -> {
-                println("Pressed 'favorite' button.")
                 if (isFav) {
                     session.setFavorite("")
                 } else {
@@ -89,17 +78,24 @@ class DetailActivity : AppCompatActivity() {
                 return true
             }
             R.id.share_menu -> {
-                println("Pressed 'share' button.")
-                shareDaily()
+                shareRecipe()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
-    private fun shareDaily() {
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_detail_actionbar, menu)
+        favMenuItem = menu?.findItem(R.id.fav_menu)!!
+        setFavoriteIcon()
+        return true
+    }
+
+    private fun shareRecipe() {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "urmom is gae")
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this recipe: ${recipe.name}")
         sendIntent.type = "text/plain"
 
         val shareIntent = Intent.createChooser(sendIntent, null)
@@ -107,6 +103,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setFavoriteIcon() {
+        Log.d("DetailActivity", "Setting favorite icon. isFav: $isFav")
         if(isFav) {
             favMenuItem.setIcon(R.drawable.ic_selected_fav)
         } else {
@@ -160,10 +157,15 @@ class DetailActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                recipe = service.getRecipe(id)
+                recipe = service.getRecipeById(id)
 
                 CoroutineScope(Dispatchers.Main).launch {
+                    isFav = session.isFavorite(recipe.id.toString())
                     loadData()
+                    setFavoriteIcon()
+                    Log.d("DetailActivity", "Fetching recipe with ID: $id")
+                    Log.d("DetailActivity", "Recipe is favorite: $isFav")
+                    Log.d("SessionManager", "Is favorite for recipe ${recipe.id}: ${session.isFavorite(recipe.id.toString())}")
                 }
             } catch (e: Exception) {
                 Log.e("API", e.stackTraceToString())

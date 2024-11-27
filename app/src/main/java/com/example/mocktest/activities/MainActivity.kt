@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
-        searchRecipe("a")
+        searchRecipe()
     }
 
     private fun navigateToDetail(recipe: Recipe) {
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                searchRecipe(query)
+                searchRecipe()
                 return true
             }
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
-    private fun searchRecipe (query: String) {
+    private fun searchRecipe() {
         binding.loadingProgressBar.visibility = View.VISIBLE
         val service = RetrofitProvider.getRetrofit()
 

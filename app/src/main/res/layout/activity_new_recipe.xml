@@ -15,7 +15,8 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <!-- Header -->
     <FrameLayout
@@ -60,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout">
 
-        <!-- Task title -->
+        <!-- Recipe title -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/titleTextField"
             android:layout_width="match_parent"
@@ -76,15 +77,34 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Task description -->
+        <!-- Recipe ingredients -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descriptionTextField"
+            android:id="@+id/ingredientsTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/new_recipe_ingredients"
             app:counterEnabled="true"
             app:counterMaxLength="300">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:gravity="top"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Recipe instructions -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/instructionsTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/new_recipe_instructions"
+            app:counterEnabled="true"
+            app:counterMaxLength="600">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

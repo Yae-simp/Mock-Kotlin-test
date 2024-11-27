@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mocktest.data.Recipe
 import com.example.mocktest.databinding.ItemRecipeBinding
+import com.example.mocktest.sqlite.NewRecipe
 import com.squareup.picasso.Picasso
 
 class RecipeAdapter (private var items: List<Recipe>, val onItemClick: (Int) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
@@ -33,9 +34,9 @@ class RecipeAdapter (private var items: List<Recipe>, val onItemClick: (Int) -> 
     }
 }
 
-class ViewHolder(private val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+class ViewHolder(internal val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun render(recipe: Recipe) {
+    fun render(recipe: NewRecipe) {
         binding.recipeNameTextView.text = recipe.name
         Picasso.get().load(recipe.image).into(binding.recipeImageView)
     }

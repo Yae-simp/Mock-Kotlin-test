@@ -10,5 +10,5 @@ interface RecipeService {
     suspend fun getRecipes(): RecipeResponse
 
     @GET("recipes/{recipe-id}")
-    suspend fun getRecipe(@Path("recipe-id") id: Int): Recipe
+    suspend fun getRecipeById(@Path("recipe-id") id: Int): Recipe
 }
