@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+        binding.newRecipeNameTVinMainAct.visibility = View.GONE
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -82,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
+
     private fun searchRecipe() {
         binding.loadingProgressBar.visibility = View.VISIBLE
         val service = RetrofitProvider.getRetrofit()

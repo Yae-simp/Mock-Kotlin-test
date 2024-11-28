@@ -11,6 +11,7 @@ import com.example.mocktest.sessionmanager.SessionManager
 import com.squareup.picasso.Picasso
 
 class RecipeAdapter (private var items: List<Recipe>, val onItemClick: (Int) -> Unit) : RecyclerView.Adapter<RecipeViewHolder>() {
+
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = items[position]
         holder.render(recipe)

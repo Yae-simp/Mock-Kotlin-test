@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,7 +15,7 @@ import com.example.mocktest.sqlite.RecipeDAO
 class CreateRecipeActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_TASK_ID = "TASK_ID"
+        const val EXTRA_RECIPE_ID = "RECIPE_ID"
     }
 
     private lateinit var binding: ActivityNewRecipeBinding
@@ -26,7 +25,6 @@ class CreateRecipeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         binding = ActivityNewRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -39,7 +37,7 @@ class CreateRecipeActivity : AppCompatActivity() {
 
         recipeDAO = RecipeDAO(this)
 
-        val id = intent.getLongExtra(EXTRA_TASK_ID, -1L)
+        val id = intent.getLongExtra(EXTRA_RECIPE_ID, -1L)
         recipe = if (id != -1L) {
             isEditing = true
             recipeDAO.findById(id)!!
@@ -115,6 +113,7 @@ class CreateRecipeActivity : AppCompatActivity() {
             } else {
                 recipeDAO.insert(recipe)
             }
+            // Return the result to the calling activity
             val resultIntent = Intent().apply {
                 putExtra("RECIPE", recipe)
             }
