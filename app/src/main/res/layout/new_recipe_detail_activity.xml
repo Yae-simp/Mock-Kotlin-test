@@ -9,19 +9,30 @@
         android:id="@+id/recipeNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Recipe Name"
+        android:text="@string/recipe_name"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/recipeDescriptionTextView"
+        android:id="@+id/newRecipeIngredients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Recipe Description"
+        android:text="@string/new_recipe_ingredients"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recipeNameTextView"
         android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/newRecipeInstructions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/new_recipe_instructions"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newRecipeIngredients"
+        android:layout_marginTop="8dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mocktest.activities.ListOfCreatedRecipesActivity
 import com.example.mocktest.databinding.ItemNewRecipeBinding
 import com.example.mocktest.data.NewRecipe
 
@@ -17,6 +16,7 @@ class NewRecipeAdapter(
     override fun onBindViewHolder(holder: NewRecipeViewHolder, position: Int) {
         val recipe = items[position]
         holder.render(recipe)
+
         holder.itemView.setOnClickListener {
             onItemClick(position)
         }
@@ -35,8 +35,8 @@ class NewRecipeAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateItems(items: List<NewRecipe>) {
-        this.items = items
+    fun updateItems (newItems: List<NewRecipe>) {
+        this.items = newItems
         notifyDataSetChanged()
     }
 }

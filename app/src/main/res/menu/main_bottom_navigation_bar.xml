@@ -6,8 +6,12 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_home" />
 
+    <item android:id="@+id/navigation_new"
+        android:title=""
+        app:showAsAction="always"/>
+
     <item android:id="@+id/navigation_my_recipes"
         android:title="@string/menu_my_recipes"
         app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_compass" />
+        android:icon="@drawable/ic_my_recipes" />
 </menu>

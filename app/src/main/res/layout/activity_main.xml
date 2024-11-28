@@ -22,10 +22,11 @@
         android:id="@+id/addRecipeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="36dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ContentDescription" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -62,9 +63,10 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="end"
+        android:layout_height="wrap_content"
         app:menu="@menu/main_bottom_navigation_bar"
+        app:itemPaddingBottom="24dp"
+        android:layout_marginBottom="-12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

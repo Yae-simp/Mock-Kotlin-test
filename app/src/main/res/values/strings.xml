@@ -25,4 +25,5 @@
     <string name="menu_share">menu share</string>
     <string name="menu_home">Home</string>
     <string name="menu_my_recipes">My recipes</string>
+    <string name="recipe_name">Recipe Name</string>
 </resources>

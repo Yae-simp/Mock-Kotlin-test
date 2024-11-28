@@ -8,7 +8,7 @@ data class RecipeResponse (
 
 data class Recipe (
     @SerializedName("id") val id:Int,
-    @SerializedName("name") val name:String,
+    @SerializedName("name") override val name:String,
     @SerializedName("ingredients") val ingredients:List<String>,
     @SerializedName("instructions") val instructions:List<String>,
     @SerializedName("image") val image: String,
@@ -18,5 +18,5 @@ data class Recipe (
     @SerializedName("difficulty") val difficulty: String,
     @SerializedName("caloriesPerServing") val caloriesPerServing: Int,
     @SerializedName("cuisine") val cuisine: String,
-)
+) : Searchable
 

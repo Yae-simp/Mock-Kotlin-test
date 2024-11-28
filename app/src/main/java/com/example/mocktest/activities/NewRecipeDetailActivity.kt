@@ -4,14 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mocktest.databinding.NewRecipeDetailActivityBinding
 
-class RecipeDetailActivity : AppCompatActivity() {
+class NewRecipeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: NewRecipeDetailActivityBinding  // ViewBinding for this activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize ViewBinding
         binding = NewRecipeDetailActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -21,6 +20,8 @@ class RecipeDetailActivity : AppCompatActivity() {
 
         // Set the recipe details in the views
         binding.recipeNameTextView.text = recipeName
-        binding.recipeDescriptionTextView.text = recipeDescription
+        binding.newRecipeIngredients.text = recipeDescription
+        binding.newRecipeInstructions.text = recipeDescription
+
     }
 }
