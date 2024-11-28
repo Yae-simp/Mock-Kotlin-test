@@ -1,6 +1,9 @@
 package com.example.mocktest.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +18,7 @@ class CreateRecipeActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_TASK_ID = "TASK_ID"
     }
+
     private lateinit var binding: ActivityNewRecipeBinding
     private var isEditing: Boolean = false
     private lateinit var recipeDAO: RecipeDAO
@@ -53,9 +57,21 @@ class CreateRecipeActivity : AppCompatActivity() {
 
         binding.saveButton.setOnClickListener {
             if (validateRecipe()) {
-                saveTask()
+                saveRecipe()
             }
         }
+
+        // Update recipe title as the user types in the EditText
+        binding.titleTextField.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Update the recipe title when text changes
+                recipe.title = s.toString()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 
     private fun loadData() {
@@ -71,22 +87,24 @@ class CreateRecipeActivity : AppCompatActivity() {
     }
 
     private fun validateRecipe(): Boolean {
-        if (recipe.title.trim().isEmpty()) {
+        val title = recipe.title.trim()
+
+        if (title.isEmpty()) {
             binding.titleTextField.error = "Please write something"
             return false
-        } else {
-            binding.titleTextField.error = null
         }
-        if (recipe.title.length > 50) {
+        // Check if title exceeds 50 characters
+        if (title.length > 50) {
             binding.titleTextField.error = "Surpassed char limit"
             return false
-        } else {
-            binding.titleTextField.error = null
         }
+        // Clear any previous error if validation passed
+        binding.titleTextField.error = null
+
         return true
     }
 
-    private fun saveTask() {
+    private fun saveRecipe() {
         recipe.title = binding.titleTextField.editText?.text.toString()
         recipe.ingredients = binding.ingredientsTextField.editText?.text.toString()
         recipe.instructions = binding.instructionsTextField.editText?.text.toString()
@@ -97,7 +115,10 @@ class CreateRecipeActivity : AppCompatActivity() {
             } else {
                 recipeDAO.insert(recipe)
             }
-
+            val resultIntent = Intent().apply {
+                putExtra("RECIPE", recipe)
+            }
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
     }
