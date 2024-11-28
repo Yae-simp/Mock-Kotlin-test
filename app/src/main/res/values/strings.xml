@@ -23,4 +23,6 @@
     <string name="new_recipe_name">Your recipe name</string>
     <string name="menu_fav">menu favorite</string>
     <string name="menu_share">menu share</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_my_recipes">My recipes</string>
 </resources>

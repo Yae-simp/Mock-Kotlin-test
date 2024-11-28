@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.mocktest.databinding.ActivityNewRecipeBinding
+import com.example.mocktest.databinding.ActivityAddNewRecipeBinding
 import com.example.mocktest.data.NewRecipe
 import com.example.mocktest.sqlite.RecipeDAO
 
@@ -18,7 +18,7 @@ class CreateRecipeActivity : AppCompatActivity() {
         const val EXTRA_RECIPE_ID = "RECIPE_ID"
     }
 
-    private lateinit var binding: ActivityNewRecipeBinding
+    private lateinit var binding: ActivityAddNewRecipeBinding
     private var isEditing: Boolean = false
     private lateinit var recipeDAO: RecipeDAO
     private lateinit var recipe: NewRecipe
@@ -26,7 +26,7 @@ class CreateRecipeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityNewRecipeBinding.inflate(layoutInflater)
+        binding = ActivityAddNewRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->

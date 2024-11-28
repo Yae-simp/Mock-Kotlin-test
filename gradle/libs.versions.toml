@@ -10,7 +10,6 @@ material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 retrofitVersion = "2.11.0"
-media3CommonKtx = "1.4.1"
 picasso = "2.71828"
 sqlite = "2.4.0"
 playServicesCastFramework = "22.0.0"
@@ -27,7 +26,6 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
-androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version.ref = "sqlite" }
 play-services-cast-framework = { group = "com.google.android.gms", name = "play-services-cast-framework", version.ref = "playServicesCastFramework" }

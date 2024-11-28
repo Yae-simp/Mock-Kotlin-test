@@ -4,10 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mocktest.activities.ListOfCreatedRecipesActivity
 import com.example.mocktest.databinding.ItemNewRecipeBinding
 import com.example.mocktest.data.NewRecipe
 
-class NewRecipeAdapter (
+class NewRecipeAdapter(
     private var items: List<NewRecipe>,
     val onItemClick: (Int) -> Unit,
     val onItemDelete: (Int) -> Unit

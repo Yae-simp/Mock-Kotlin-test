@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        binding.newRecipeNameTVinMainAct.visibility = View.GONE
+        //binding.newRecipeNameTVinMainAct.visibility = View.GONE
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -48,6 +48,18 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         searchRecipe()
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_my_recipes -> {
+                    startActivity(Intent(this, ListOfCreatedRecipesActivity::class.java))
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
         binding.addRecipeButton.setOnClickListener {
             val intent = Intent(this, CreateRecipeActivity::class.java)
             startActivityForResult(intent, -1)
@@ -66,11 +78,11 @@ class MainActivity : AppCompatActivity() {
             val recipeSaved = data?.getBooleanExtra("RECIPE_SAVED", false) ?: false
             if (recipeSaved) {
                 // Show confirmation in MainActivity
-                binding.newRecipeNameTVinMainAct.visibility = View.VISIBLE
+                //binding.newRecipeNameTVinNewRecipe.visibility = View.VISIBLE
 
                 // Hide the confirmation message after 2 seconds
                 Handler(Looper.getMainLooper()).postDelayed({
-                    binding.newRecipeNameTVinMainAct.visibility = View.GONE
+                    //binding.newRecipeNameTVinNewRecipe.visibility = View.GONE
                 }, 2000)
             }
         }
