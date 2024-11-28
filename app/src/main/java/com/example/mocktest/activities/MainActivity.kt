@@ -2,6 +2,8 @@ package com.example.mocktest.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.View
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         searchRecipe()
         binding.addRecipeButton.setOnClickListener {
             val intent = Intent(this, CreateRecipeActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, -1)
         }
     }
 
@@ -56,6 +58,24 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         adapter.updateItems(recipeList)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == -1 && resultCode == RESULT_OK) {
+            val recipeSaved = data?.getBooleanExtra("RECIPE_SAVED", false) ?: false
+            if (recipeSaved) {
+                // Show confirmation in MainActivity
+                binding.newRecipeNameTVinMainAct.visibility = View.VISIBLE
+
+                // Hide the confirmation message after 2 seconds
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.newRecipeNameTVinMainAct.visibility = View.GONE
+                }, 2000)
+            }
+        }
+    }
+
 
     private fun navigateToDetail(recipe: Recipe) {
         val intent = Intent(this, DetailActivity::class.java)
