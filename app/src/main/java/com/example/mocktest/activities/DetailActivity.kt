@@ -23,24 +23,21 @@ import com.example.mocktest.sessionmanager.SessionManager
 class DetailActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_RECIPE_ID = "RECIPE_ID"
+        const val EXTRA_RECIPE_ID = "RECIPE_ID" //Key for passing the recipe ID through intents
     }
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var recipe: Recipe
-    private var isFav = false
-    private lateinit var favMenuItem: MenuItem
-    private lateinit var session: SessionManager
-
+    private lateinit var recipe: Recipe  //Stores the recipe object that will be displayed.
+    private var isFav = false  //Flag to track if the recipe is marked as favorite.
+    private lateinit var favMenuItem: MenuItem  // Menu item for the favorite icon.
+    private lateinit var session: SessionManager  //Manages session data, such as favorites.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-
-        session = SessionManager(this)
+        binding = ActivityDetailBinding.inflate(layoutInflater)  //Inflates layout using ViewBinding.
+        setContentView(binding.root)  //Sets the root view of the activity.
+        session = SessionManager(this)  //Initializes session manager to manage favorite state.
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -48,26 +45,27 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Enables back button in the action bar.
 
-        binding.navigationBar.itemIconTintList = null
+        binding.navigationBar.itemIconTintList = null  //Removes tint on navigation items
         binding.navigationBar.setOnItemSelectedListener {
-            setSelectedTab(it.itemId)
+            setSelectedTab(it.itemId)  //Handles navigation bar item selection
         }
 
-        binding.navigationBar.selectedItemId = R.id.menu_ingredients
+        binding.navigationBar.selectedItemId = R.id.menu_ingredients  //Sets default selected tab.
 
-        val id = intent.getIntExtra(EXTRA_RECIPE_ID, -1)
-        getRecipe(id)
+        val id = intent.getIntExtra(EXTRA_RECIPE_ID, -1)  //Gets recipe ID from intent
+        getRecipe(id)  //Fetches recipe details based on ID
     }
-
+ //Menu item handling
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                finish()  //Closes the activity and go back to the previous one
                 return true
             }
             R.id.fav_menu -> {
+                //Toggles the favorite state
                 if (isFav) {
                     session.setFavorite(-1)
                 } else {
@@ -94,12 +92,12 @@ class DetailActivity : AppCompatActivity() {
 
     private fun shareRecipe() {
         val sendIntent = Intent()
-        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.action = Intent.ACTION_SEND  //Creates an intent for sharing
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this recipe: ${recipe.name}")
         sendIntent.type = "text/plain"
 
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
+        val shareIntent = Intent.createChooser(sendIntent, null)  //Creates a chooser dialog
+        startActivity(shareIntent)  //Starts the activity to share the recipe
     }
 
     private fun setFavoriteIcon() {
