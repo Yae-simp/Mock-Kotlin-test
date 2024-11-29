@@ -1,6 +1,5 @@
 package com.example.mocktest.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -57,7 +56,8 @@ class DetailActivity : AppCompatActivity() {
         val id = intent.getIntExtra(EXTRA_RECIPE_ID, -1)  //Gets recipe ID from intent
         getRecipe(id)  //Fetches recipe details based on ID
     }
- //Menu item handling
+
+    //Handles user interactions with the action bar menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -109,6 +109,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    //Controls which content to display based on the selected tab in the bottom navigation
     private fun setSelectedTab(itemId: Int) : Boolean {
         when (itemId) {
             R.id.menu_ingredients -> {
@@ -131,7 +132,7 @@ class DetailActivity : AppCompatActivity() {
         return true
     }
 
-    @SuppressLint("SetTextI18n")
+    //Responsible for loading and displaying the recipe's data in the UI
     private fun loadData() {
         supportActionBar?.title = recipe.name
         Picasso.get().load(recipe.image).into(binding.recipeImageView)
@@ -154,18 +155,22 @@ class DetailActivity : AppCompatActivity() {
     private fun getRecipe(id: Int) {
         //service is initialized using RetrofitProvider.getRetrofit()
         val service = RetrofitProvider.getRetrofit()
-
+        //Launches a coroutine in the IO thread (background thread) to make the network call.
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                //Makes the network request to fetch the recipe by its ID using Retrofit.
                 recipe = service.getRecipeById(id)
 
+                //Once data is fetched successfully, switch to Main thread to update the UI.
                 CoroutineScope(Dispatchers.Main).launch {
+                    //Checks if recipe is marked as a favorite by calling a method from SessionManager.
                     isFav = session.isFavorite(recipe.id)
+
+                    //Loads recipe data into the views (update the UI).
                     loadData()
+
+                    //Updates favorite icon based on whether it's marked as a favorite or not.
                     setFavoriteIcon()
-                    Log.d("DetailActivity", "Fetching recipe with ID: $id")
-                    Log.d("DetailActivity", "Recipe is favorite: $isFav")
-                    Log.d("SessionManager", "Is favorite for recipe ${recipe.id}: ${session.isFavorite(recipe.id)}")
                 }
             } catch (e: Exception) {
                 Log.e("API", e.stackTraceToString())
