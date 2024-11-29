@@ -152,6 +152,7 @@ class DetailActivity : AppCompatActivity() {
 
     //Fetches a recipe from DummyJSON using Retrofit and displays it in UI. Manages recipe favorite state.
     private fun getRecipe(id: Int) {
+        //service is initialized using RetrofitProvider.getRetrofit()
         val service = RetrofitProvider.getRetrofit()
 
         CoroutineScope(Dispatchers.IO).launch {
