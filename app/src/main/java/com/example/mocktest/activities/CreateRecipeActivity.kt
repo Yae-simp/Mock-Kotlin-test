@@ -11,7 +11,6 @@ import com.example.mocktest.databinding.ActivityAddNewRecipeBinding
 import com.example.mocktest.data.NewRecipe
 import com.example.mocktest.sqlite.RecipeDAO
 
-
 class CreateRecipeActivity : AppCompatActivity() {
 
     companion object {
@@ -22,6 +21,7 @@ class CreateRecipeActivity : AppCompatActivity() {
     private var isEditing: Boolean = false
     private lateinit var recipeDAO: RecipeDAO
     private lateinit var recipe: NewRecipe
+    private var recipeId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +29,7 @@ class CreateRecipeActivity : AppCompatActivity() {
         binding = ActivityAddNewRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Adjust the window insets for padding
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -37,33 +38,40 @@ class CreateRecipeActivity : AppCompatActivity() {
 
         recipeDAO = RecipeDAO(this)
 
-        val id = intent.getLongExtra(EXTRA_RECIPE_ID, -1L)
-        recipe = if (id != -1L) {
+        // Get recipeId from the Intent
+        recipeId = intent.getLongExtra(EXTRA_RECIPE_ID, -1L)
+
+        // Check if the recipeId is valid for editing
+        if (recipeId != -1L) {
             isEditing = true
-            recipeDAO.findById(id)!!
+            // Retrieve the recipe from the database
+            recipe = recipeDAO.findById(recipeId) ?: NewRecipe(-1, "", "", "")
         } else {
             isEditing = false
-            NewRecipe(-1, "", "", "")
+            // Create a new recipe if no valid ID is passed
+            recipe = NewRecipe(-1, "", "", "")
         }
 
+        // Load views and data
         loadViews()
         loadData()
     }
 
     private fun loadViews() {
+        // Close button to finish the activity
         binding.closeButton.setOnClickListener { finish() }
 
+        // Save button to either save or update the recipe
         binding.saveButton.setOnClickListener {
             if (validateRecipe()) {
                 saveRecipe()
             }
         }
 
-        // Update recipe title as the user types in the EditText
+        // TextWatcher for updating the recipe title dynamically
         binding.titleTextField.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                // Update the recipe title when text changes
-                recipe.title = s.toString()
+                recipe.title = s.toString()  // Update title as the user types
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -73,12 +81,14 @@ class CreateRecipeActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
+        // Update the title based on whether it's editing or creating
         binding.titleTextView.text = if (isEditing) {
-            "Edit recipe"
+            "Edit Recipe"
         } else {
-            "New recipe"
+            "New Recipe"
         }
 
+        // Pre-fill the fields with the recipe data if editing
         binding.titleTextField.editText?.setText(recipe.title)
         binding.ingredientsTextField.editText?.setText(recipe.ingredients)
         binding.instructionsTextField.editText?.setText(recipe.instructions)
@@ -87,38 +97,41 @@ class CreateRecipeActivity : AppCompatActivity() {
     private fun validateRecipe(): Boolean {
         val title = recipe.title.trim()
 
+        // Validate that the title is not empty or too long
         if (title.isEmpty()) {
             binding.titleTextField.error = "Please write something"
             return false
         }
-        // Check if title exceeds 50 characters
         if (title.length > 50) {
             binding.titleTextField.error = "Surpassed char limit"
             return false
         }
-        // Clear any previous error if validation passed
-        binding.titleTextField.error = null
-
+        binding.titleTextField.error = null  // Clear any previous error
         return true
     }
 
     private fun saveRecipe() {
+        // Save the updated recipe from the input fields
         recipe.title = binding.titleTextField.editText?.text.toString()
         recipe.ingredients = binding.ingredientsTextField.editText?.text.toString()
         recipe.instructions = binding.instructionsTextField.editText?.text.toString()
 
         if (validateRecipe()) {
             if (recipe.id != -1L) {
+                // Update the existing recipe
                 recipeDAO.update(recipe)
             } else {
+                // Insert a new recipe
                 recipeDAO.insert(recipe)
             }
-            // Return the result to the calling activity
+
+            // Return the result to the previous activity
             val resultIntent = Intent().apply {
-                putExtra("RECIPE", recipe)
+                putExtra("RECIPE", recipe)  // Pass the updated recipe back
             }
-            setResult(RESULT_OK, resultIntent)
-            finish()
+            setResult(RESULT_OK, resultIntent)  // Set the result back to NewRecipeDetailActivity
+            finish()  // Close the activity and return to the previous one
         }
     }
+
 }

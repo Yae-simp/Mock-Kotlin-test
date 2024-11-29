@@ -31,4 +31,5 @@
     <string name="delete_recipe_button">Delete</string>
     <string name="delete_recipe_confirm_message">Are you sure to delete recipe: %1$s?</string>
     <string name="delete_recipe_success_message">Recipe deleted successfully</string>
+    <string name="edit_recipe">Edit</string>
 </resources>
