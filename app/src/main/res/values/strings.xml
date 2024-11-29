@@ -26,4 +26,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_my_recipes">My recipes</string>
     <string name="recipe_name">Recipe Name</string>
+
+    <string name="delete_recipe_title">Delete recipe</string>
+    <string name="delete_recipe_button">Delete</string>
+    <string name="delete_recipe_confirm_message">Are you sure to delete recipe: %1$s?</string>
+    <string name="delete_recipe_success_message">Recipe deleted successfully</string>
 </resources>

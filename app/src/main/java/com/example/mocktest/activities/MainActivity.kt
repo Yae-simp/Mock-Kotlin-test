@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,11 +42,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         recipeDAO = RecipeDAO(this)
-        newRecipeList = recipeDAO.findAll().toMutableList() // Load recipes from DB
+        newRecipeList = recipeDAO.findAll().toMutableList()
         newRecipeAdapter = NewRecipeAdapter(newRecipeList, { position ->
             val recipe = newRecipeList[position]
             navigateToDetail(recipe)
-        }, { _ -> })
+        }, { position ->
+            onItemClickRemoveListener(position)
+        })
 
         recipeAdapter = RecipeAdapter(recipeList) { position ->
             val recipe = recipeList[position]
@@ -157,5 +161,29 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun onItemClickRemoveListener(position: Int) {
+        val newRecipe: NewRecipe = newRecipeList[position]
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+        dialogBuilder.setTitle(R.string.delete_recipe_title)
+        dialogBuilder.setMessage(getString(R.string.delete_recipe_confirm_message, newRecipe.name))
+        dialogBuilder.setIcon(R.drawable.ic_delete)
+        dialogBuilder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
+            newRecipeAdapter.notifyItemChanged(position)
+            dialog.dismiss()
+        }
+        dialogBuilder.setPositiveButton(R.string.delete_recipe_button) { dialog, _ ->
+            recipeDAO.delete(newRecipe)  // Remove from database
+
+            val newList = newRecipeList.minus(newRecipe)  // Update in-memory list
+            newRecipeAdapter.updateItems(newList)
+
+            newRecipeList = newList.toMutableList()
+            dialog.dismiss()
+            Toast.makeText(this, R.string.delete_recipe_success_message, Toast.LENGTH_SHORT).show()
+        }
+        dialogBuilder.show()
     }
 }
