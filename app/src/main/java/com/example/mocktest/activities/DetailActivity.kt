@@ -150,6 +150,7 @@ class DetailActivity : AppCompatActivity() {
         binding.miscContent.caloriesPerServingTV.text = recipe.caloriesPerServing.toString()
     }
 
+    //Fetches a recipe from DummyJSON using Retrofit and displays it in UI. Manages recipe favorite state.
     private fun getRecipe(id: Int) {
         val service = RetrofitProvider.getRetrofit()
 
